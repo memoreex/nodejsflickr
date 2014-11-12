@@ -13,12 +13,6 @@ block content
 
   div.container
    div(id="hej").row
-   //
-    - for (var i = 0; i < flickrr.length; ++i){
-    div.col-md-2
-     a(href= "https://farm" + flickrr[i].farmid + ".staticflickr.com/"+ flickrr[i].serverid +"/"+ flickrr[i].photoid +"_"+ flickrr[i].secretid +"_b.jpg", data-lightbox="pics" data-title= flickrr[i].title) 
-      img.img-thumbnail.pos(src= "https://farm" + flickrr[i].farmid + ".staticflickr.com/"+ flickrr[i].serverid +"/"+ flickrr[i].photoid +"_"+ flickrr[i].secretid +"_q.jpg")
-    - }
 
   
 

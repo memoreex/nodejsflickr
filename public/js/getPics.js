@@ -1,4 +1,3 @@
-var arrayResults = [];
 
 
 var Flickr = require("flickrapi"),
@@ -22,15 +21,13 @@ module.exports = {
 
                 flickr.photos.search({
                 tags: hashtag,
-                per_page: 18,
-                tag_mode: 'all',
-                privacy_filter: 1
+                per_page: 18
 
 
             }, function(err, result) {
               // result is Flickr's response
-              
-                //console.log(result.photos.photo.length);
+                var arrayResults = [];
+
                 for (var i = 0; i < result.photos.photo.length; i++){
                         
                         var pics = result.photos.photo[i];
@@ -52,10 +49,13 @@ module.exports = {
                 callback(arrayResults);
 
               });
-                         
+                                       
       });
     }
+
 }
+
+
     
 
 

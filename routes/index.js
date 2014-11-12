@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 
-var ary = [];
+
 
 //console.log(flikkr.Flicking);
 
@@ -17,18 +17,21 @@ flikkr.flick('umea', function(arrayResults){
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { 
 
-  	title: 'NodeJS with Flickr API',
-  	subtitle: 'Search for photos with a chosen hashtag',
-  	flickrr : ary
 
-  });
+
+	res.render('index', { 
+
+		title: 'NodeJS with Flickr API',
+		subtitle: 'Search for photos with a chosen hashtag'
+
+  	});
 });
 
 router.post('/',function(req, res){
     var hash = req.body.hashtag;
     flikkr.flick(hash, function(arrayResults) {
+
 	  /*res.render('index', { 
 	  	title: 'NodeJS with Flickr API',
 	  	subtitle: 'Displaying photos with #umea',
