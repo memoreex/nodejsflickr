@@ -1,5 +1,4 @@
 
-
 var Flickr = require("flickrapi"),
     flickrOptions = {
       api_key: "be38cf44e9ee51ded0a3c9a807b3f677",
@@ -9,15 +8,12 @@ var Flickr = require("flickrapi"),
       access_token_secret: "86ee8e363526cb6e"
     };
 
-
-
 module.exports = {
 
     flick: function(hashtag, callback){
 
       Flickr.authenticate(flickrOptions, function(error, flickr) {
-      // we can now use "flickr" as our API object
-        
+      //Vi kan nu använda Flick's API
 
                 flickr.photos.search({
                 tags: hashtag,
@@ -25,29 +21,38 @@ module.exports = {
 
 
             }, function(err, result) {
-              // result is Flickr's response
+              // result är Flickr's svar
                 var arrayResults = [];
+                var errorResponse = false;
 
-                for (var i = 0; i < result.photos.photo.length; i++){
-                        
-                        var pics = result.photos.photo[i];
+                if(err){
 
-                        //console.log(pics.server);
+                  errorResponse = true;
+                  
+                }
 
-                        arrayResults[i] = {
+                else{
 
-                            photoid : pics.id,
-                            serverid : pics.server,
-                            secretid : pics.secret,
-                            farmid : pics.farm,
-                            title: pics.title
-                            
-                        }
+                  for (var i = 0; i < result.photos.photo.length; i++){
+                          
+                          var pics = result.photos.photo[i];
+
+                          arrayResults[i] = {
+
+                              photoid : pics.id,
+                              serverid : pics.server,
+                              secretid : pics.secret,
+                              farmid : pics.farm,
+                              title: pics.title
+                              
+                          }
+
+                  }
 
                 }
 
-                callback(arrayResults);
-
+                callback(arrayResults, errorResponse);
+                
               });
                                        
       });
@@ -55,65 +60,4 @@ module.exports = {
 
 }
 
-
-    
-
-
-                          /*
-                          for (var j = 0; j < arrayResults.length; j++) {
-                            if(result.photo.description._content != ''){
-
-                              var caption = result['photo'].length;
-                              console.log(caption);
-                              //arrayResults.push({ captions: caption });
-                            }else{
-
-                            }
-
-                          }
-
-                          */
-                          
-
-
-                            
-                            //console.log(caption);
-
-
-                        
-
-                            
-                            
-                            
-                           
-
-                              
-                            
-                            //JSON.stringify(arrayCap);
-                            /*
-                            arrayAllt = arrayResults.concat(arrayResults);
-
-                            arrayAllt= arrayAllt.filter(function(val) {
-                              return val != undefined;});
-                            
-                            */
-                            //console.log(arrayAllt);
-
-                            
-
-                          
-                          
-                          
-
-                        
-
-
-                
-
-                
-
-            
-
-
-    
     
