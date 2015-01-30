@@ -45,9 +45,7 @@ Du har nu skapat din första applikation och kan testa köra den via kommandot:
 node ./bin/www
 ```
 
-Och sedan skriva localhost:3000 i din webbläsare. Applikationen körs nu lokalt och lyssnar på port 3000.  Vilket borde visa följande webbsida:
-
-IN MED EN BILD
+Sedan skriver du localhost:3000 i din webbläsare. Applikationen körs nu lokalt och lyssnar på port 3000. 
 
 ===
 Lite om mappstruktur
