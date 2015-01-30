@@ -47,7 +47,6 @@ node ./bin/www
 
 Sedan skriver du localhost:3000 i din webbläsare. Applikationen körs nu lokalt och lyssnar på port 3000. 
 
-===
 Lite om mappstruktur
 ===
 
@@ -71,7 +70,6 @@ Nederst finns din app.js som inkluderar alla de olika paket som behövs i din ap
 
 (packages.json listar och hanterar alla dina olika dependencies)
 
-===
 Skaffa en API-nyckel från Flickr
 ===
 
@@ -81,7 +79,6 @@ När detta är avklarat så loggar du in och går in via inställningar och unde
 
 Därefter blir du tilldelad dels en “Key” och dels en “Secret” som kommer att används i applikationen senare.
 
-===
 Installera npm-paketet ”flickapi”
 ===
 
@@ -137,7 +134,6 @@ export FLICKR_ACCESS_TOKEN_SECRET="..................."
 ```
 Spara och kör applikationen igen. Inga felmeddelanden bör visas. Nu kan vi använda metoderna i Flickrs API som finns dokumenterade på https://www.flickr.com/services/api/
 
-===
 En första applikation
 ===
 
@@ -191,7 +187,6 @@ callback(arrayResults);
 
 ```
 
----
 Steg 1: Skicka data
 ---
 
@@ -212,7 +207,6 @@ router.post('/',function(req, res){
 
 Som använder sig av den exporterade metoden från getPics.js med inparametrerna från callbacken. Därefter så vill vi skicka med responsen med två olika attribut, en med arrayens innehåll och en med det eventuella felet. Värt att notera är att själva hastagen skickas med från inputfältet i index.jade, som sedan tas in via bodyn på klientsidan och sätts till en variabel. Denna variabel skickas med till getPics.js och används där för att hämta respektive bilder. 
 
----
 Steg 2: Hantera data
 ---
 
@@ -232,7 +226,6 @@ $(document).ready(function(){
 ```
 Inledningsvis så är tanken att funktionen väntar på att användaren skall trycka på Enter på tangetbordet och därmed utföra sin sökning. Enter har nyckelkoden 13. När det är gjort så skickar den med sökordet, alltså själva hashtagen, i en form av en slags ajax-request som innebär att sidan inte behöver laddas om för varje ny sökning. 
 
----
 Steg 3: Presentera bilderna
 ---
 
@@ -270,7 +263,6 @@ För varje bild i arrayen finns ett av de fem tillhörande arributen som skapade
 
 Själva skapadet av taggar i form divs och img så används jQuery-anrop där olika arrtribut går att skicka med och antingen appenda eller prependa till respektive div och id beroende på vad som är lämpligt.
 
----
 Jade
 ---
 För att kunna lägga till en struktur på webbsidan så använder jag mig av Jade som template istället för HTML. Givetvis går det bra att välja vad som passar bäst men fördelarna med Jade är att det följer en enklare struktur i form av indentering och att man slipper avsluta taggar o.s.v. Det går också bra att kombinera Jade med HTML syntax om så önskas.
