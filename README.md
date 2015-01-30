@@ -192,7 +192,7 @@ callback(arrayResults);
 ```
 
 ---
-Nästa steg.
+Steg 1: Hantera data
 ---
 
 Vi vill nu skicka med data från den callback som vi gjorde i föregående steg. Detta görs i /routes->index.js
@@ -212,7 +212,9 @@ router.post('/',function(req, res){
 
 Som använder sig av den exporterade metoden från getPics.js med inparametrerna från callbacken. Därefter så vill vi skicka med responsen med två olika attribut, en med arrayens innehåll och en med det eventuella felet. Värt att notera är att själva hastagen skickas med från inputfältet i index.jade, som sedan tas in via bodyn på klientsidan och sätts till en variabel. Denna variabel skickas med till getPics.js och används där för att hämta respektive bilder. 
 
-Nästa steg.
+---
+Steg 2: Presentera bilderna
+---
 
 Nu vill vi kunna visa bilderna som vi precis har hämtas. Vi skapar en javascript-fil som hanterar detta. I mitt fall så döpte jag den till client.js
 
