@@ -139,4 +139,32 @@ export FLICKR_ACCESS_TOKEN_SECRET="..................."
 ```
 Spara och kör applikationen igen. Inga felmeddelanden bör visas. Nu kan vi använda metoderna i Flickrs API som finns dokumenterade på https://www.flickr.com/services/api/
 
+===
+En första applikation
+===
 
+Denna tutorial kommer att visa hur du kan använda Flickrs API för att söka efter en hashtag och sedan visa motsvarande bilder. För att göra en sökning av bilder används metoden flickr.photos.search enligt https://www.flickr.com/services/api/flickr.photos.search.html. Denna skickar då tillbaka en array med JSON-objekt. Utifrån dessa objekt går det att hämta information om de olika bilderna. Det vi behöver veta om varje bild för att kunna skapa en korrekt url-sträng och därmed kunna visa bilden utgår från följande metod https://www.flickr.com/services/api/misc.urls.html 
+
+https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+
+Det som behöver sparas undan är alltså farm-id, id, server-id och secret. Detta görs genom att först loopa igenom alla bilder och spara undan data i en array. 
+
+I getPics.js sköts detta genom att lägga till följande kod:
+
+```javascript
+module.exports = {
+
+    flick: function(hashtag, callback){
+
+      Flickr.authenticate(flickrOptions, function(error, flickr) {
+      //Vi kan nu använda Flick's API
+
+                flickr.photos.search({
+                tags: hashtag,
+                per_page: 18
+
+
+            }, function(err, result) {
+             ... //Kod som hanterar resultatet
+            }
+```
