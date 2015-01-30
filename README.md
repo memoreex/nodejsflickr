@@ -73,3 +73,70 @@ Nederst finns din app.js som inkluderar alla de olika paket som behövs i din ap
 
 (packages.json listar och hanterar alla dina olika dependencies)
 
+===
+Skaffa en API-nyckel från Flickr
+===
+
+I denna tutorial används Flickrs API för att hämta bilder med tillhörande information. För att komma i gång med API:t krävs först att man skapar en användare på Flickr. Detta görs genom att gå in på https://www.flickr.com/ och sedan trycka på “Sign up” och följa angivelserna där.
+
+När detta är avklarat så loggar du in och går in via inställningar och under “Sharing & Extending” och där hitta “Your API Keys” och väljer att skapa en. Alternativt följer du denna länk https://www.flickr.com/services/apps/create/apply/. Väl där så väljer du “Apply for Non-commercial key” och fyller i vad appen ska heta och vad den ska används till. Inte jätteviktigt vad man skriver. 
+
+Därefter blir du tilldelad dels en “Key” och dels en “Secret” som kommer att används i applikationen senare.
+
+===
+Installera npm-paketet ”flickapi”
+===
+
+Nästa steg är att installera ett paket i till din applikation som heter flickrapi https://www.npmjs.org/package/flickrapi som hanterar dels autentisieringen och gör det enklare att använda Flickrs API-dokumentation. Gå till din mapp pFlickr och skriv i terminalen: 
+
+```javascript
+npm install flickrapi --save
+```
+Där efter lägger du till en javascript-fil i din public/javascripts/ mapp och döper den till getPics.js
+
+Där lägger du till följande rader kod: 
+
+```javascript
+var Flickr = require("flickrapi"),
+    flickrOptions = {
+      api_key: "API key that you get from Flickr",
+      secret: "API key secret that you get from Flickr"
+    };
+
+Flickr.authenticate(flickrOptions, function(error, flickr) {
+  // we can now use "flickr" as our API object
+});
+```
+
+Och fyller i din Key och Secret som du fick tidigare. De går att hitta genom under “Your API keys” under https://www.flickr.com/account/sharing/ 
+
+När du sedan fyllt i dina siffror så kör du applikationen via terminalen igen, via kommandot:
+```javascript
+node ./bin/www
+```
+Då kommer du bli skickad till en url från Flickr som vill att du ska autentisiera applikationen och där väljer du att gå vidare och sen kommer en kod att genereras till dig. Denna kod skriver du sedan in på raden prompt: oauth_verifier: DIN KOD i terminalen.
+
+(Flickrs API kommer att ladda in alla metoder vilket kan ta någon minut)
+
+Gå in i getPics.js och lägg till följande kod:
+
+```javascript
+var FlickrOptions = {
+      api_key: "your API key",
+      secret: "your API key secret",
+      user_id: "...",
+      access_token: "...",
+      access_token_secret: "..."
+    }
+```
+
+Där du sen tidigare har din api_key och secret, men nu med tilläggen user_id, access_token och access_token_secret. Dessa värden är de som står i terminalen vid respektive namn:
+
+```javascript
+export FLICKR_USER_ID=".........................."
+export FLICKR_ACCESS_TOKEN="..............."
+export FLICKR_ACCESS_TOKEN_SECRET="..................."
+```
+Spara och kör applikationen igen. Inga felmeddelanden bör visas. Nu kan vi använda metoderna i Flickrs API som finns dokumenterade på https://www.flickr.com/services/api/
+
+
