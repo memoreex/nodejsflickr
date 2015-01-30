@@ -240,25 +240,23 @@ Därefter är det dags att presentera bilderna som finns i resultatet, i den inp
 ```javascript
 for(var i = 0; i < data.arr.length; i++) {
 							
-	jQuery('<div/>', {
-		id: 'hejs' + i,
-		class: 'col-md-2'
-	}).prependTo('#hej');
+jQuery('<div/>', {
+								id: 'parent_col' + i,
+								class: 'col-md-2'
+							}).prependTo('#base_row');
 
-	jQuery('<a/>', {
-		id: 'hejss' + i,
-		'data-lightbox': "pics", 
-		'data-title': data.arr[i].title,
-	    href: "https://farm" + data.arr[i].farmid + ".staticflickr.com/"+ data.arr[i].serverid +"/"+ data.arr[i].photoid +"_"+ data.arr[i].secretid +"_b.jpg"
-	}).appendTo('#hejs' + i);
+							jQuery('<a/>', {
+								id: 'child_link' + i,
+								'data-lightbox': "pics", 
+								'data-title': data.arr[i].title,
+							    href: "https://farm" + data.arr[i].farmid + ".staticflickr.com/"+ data.arr[i].serverid +"/"+ data.arr[i].photoid +"_"+ data.arr[i].secretid +"_b.jpg"
+							}).appendTo('#parent_col' + i);
 
 
-	jQuery('<img/>', {
-		class: 'img img-thumbnail pos',
-	    src: "https://farm" + data.arr[i].farmid + ".staticflickr.com/"+ data.arr[i].serverid +"/"+ data.arr[i].photoid +"_"+ data.arr[i].secretid +"_q.jpg"
-	}).appendTo('#hejss' + i);
-
-}
+							jQuery('<img/>', {
+								class: 'img img-thumbnail pos',
+							    src: "https://farm" + data.arr[i].farmid + ".staticflickr.com/"+ data.arr[i].serverid +"/"+ data.arr[i].photoid +"_"+ data.arr[i].secretid +"_q.jpg"
+							}).appendTo('#child_link' + i);
 ```
 
 Vi vill loopa igenom arrayen med bilder och skapa en URL som är konstruerad på det sätt som Flickr’s API använder. Vi studerar följande kodsnutt lite mer i detalj.
@@ -300,13 +298,13 @@ block content
   .aligncenter.textcenter
    h1= title
    p(id="sub")= subtitle
-   
+
    .input-group.aligncenter
     span.input-group-addon #
     <input type="text" id="taginput" class="form-control" placeholder="Hashtag" name="hashtag">
 
   div.container
-   div(id="hej").row
+   div(id="base_row").row
 ```
 
 Här skapas innehållet för själva webbsidan och eftesom tjänsten är relativt simpel så finns det inte så mycket innehåll här. Följ dokumentation för Jade för att se hur syntaxen ska se ut. 
