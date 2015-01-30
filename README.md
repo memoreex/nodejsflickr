@@ -49,4 +49,27 @@ Och sedan skriva localhost:3000 i din webbläsare. Applikationen körs nu lokalt
 
 IN MED EN BILD
 
+===
+Lite om mappstruktur
+===
+
+Välj din favorit-editor, i mitt fall har jag valt att använda Sublime Text 3 http://www.sublimetext.com/3. Sedan skapar du ett nytt projekt och inkluderar mappen med din applikation, dvs pFlickr. 
+
+Du ser att det finns en rad olika mappar och strukturen är som följer: 
+Överst syns din bin->www-mapp som hanterar parametrarna för initieringen av applikationen, såsom vilken port som ska lyssnas på. 
+I din public-mapp finns css, javascript, och bilder.
+I routes-mappen hanteras dina olika http request och skapar genom dessa olika url-strängar. Som synes finns denna rad kod i filen index.js :
+
+```javascript
+router.get('/', function(req, res) {
+  res.render('index', { title: 'Express' });
+});
+```
+Vilken hämtar startsidan (index.jade) och renderar den på klientsidan med inparametern title: “Express”.
+
+I din views-mapp finns dina .jade-filer som hanterar det du vill visa i dina vyer. Jade fungerar som html, men med skillnaden att det är använder en annan typ av indentering och syntax. För mer information se länk http://jade-lang.com/ 
+
+Nederst finns din app.js som inkluderar alla de olika paket som behövs i din applikation. Här kan du också välja att sköta felhanteringen. 
+
+(packages.json listar och hanterar alla dina olika dependencies)
 
