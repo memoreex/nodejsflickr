@@ -149,6 +149,8 @@ https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
 
 Det som behöver sparas undan är alltså farm-id, id, server-id och secret. Detta görs genom att först loopa igenom alla bilder och spara undan data i en array. 
 
+Eftersom vi vill kunna använda metoder, närmare bestämt metoden som heter flick, i andra filer i projektet måste vi exportera denna och det görs genom module.exports{}. Metoden flick tar alltså in två parametrar; en hashtag och en callback. Hashtag-värdet fås genom att användaren skriver in en input i ett inputfält på sidan, mer om detta senare. Sedan skickas denna input med i metoden. För att hämta bilder används alltså Flickr’s API metoder, dessa anrop har gjorts simplare med hjälp av flickrapi-paketet som vi installerade tidigare.
+
 I getPics.js sköts detta genom att lägga till följande kod:
 
 ```javascript
@@ -168,3 +170,156 @@ module.exports = {
              ... //Kod som hanterar resultatet
             }
 ```
+Efter anropet har gjorts så fås ett svar tillbaka i form av result som är en objekt-array. Det vi vill göra nu är att loopa i genom varje objekt i arrayen och spara undan viktig data i en egen array som vi döper till arrayResults. Den innehåller fem st objekt som behövs för att sedan kunna generera en URL-sträng för bilderna så att vi kan visa dem.
+
+```javascript
+for (var i = 0; i < result.photos.photo.length; i++){
+                          
+        var pics = result.photos.photo[i];
+
+        arrayResults[i] = {
+
+            photoid : pics.id,
+            serverid : pics.server,
+            secretid : pics.secret,
+            farmid : pics.farm,
+            title: pics.title
+            
+        }
+
+}
+
+callback(arrayResults);
+
+```
+
+---
+Nästa steg.
+---
+
+Vi vill nu skicka med data från den callback som vi gjorde i föregående steg. Detta görs i /routes->index.js
+
+```javascript
+router.post('/',function(req, res){
+    var hash = req.body.hashtag;
+    flikkr.flick(hash, function(arrayResults, errorResponse) {
+
+      res.send({
+      	arr: arrayResults,
+        err: errorResponse
+      });
+    });
+});
+```
+
+Som använder sig av den exporterade metoden från getPics.js med inparametrerna från callbacken. Därefter så vill vi skicka med responsen med två olika attribut, en med arrayens innehåll och en med det eventuella felet. Värt att notera är att själva hastagen skickas med från inputfältet i index.jade, som sedan tas in via bodyn på klientsidan och sätts till en variabel. Denna variabel skickas med till getPics.js och används där för att hämta respektive bilder. 
+
+Nästa steg.
+
+Nu vill vi kunna visa bilderna som vi precis har hämtas. Vi skapar en javascript-fil som hanterar detta. I mitt fall så döpte jag den till client.js
+
+```javascript
+$(document).ready(function(){
+	$(document).on('keypress', function (e) {
+		if(e.keyCode === 13) {
+			$.post("/", { 
+				
+				hashtag: $("#taginput").val()
+
+			}, function(data){
+			……do stuff
+			}
+```
+Inledningsvis så är tanken att funktionen väntar på att användaren skall trycka på Enter på tangetbordet och därmed utföra sin sökning. Enter har nyckelkoden 13. När det är gjort så skickar den med sökordet, alltså själva hashtagen, i en form av en slags ajax-request som innebär att sidan inte behöver laddas om för varje ny sökning. 
+
+---
+Nästa steg
+---
+
+Därefter är det dags att presentera bilderna som finns i resultatet, i den inparameter som heter data i detta fall. 
+
+```javascript
+for(var i = 0; i < data.arr.length; i++) {
+							
+	jQuery('<div/>', {
+		id: 'hejs' + i,
+		class: 'col-md-2'
+	}).prependTo('#hej');
+
+	jQuery('<a/>', {
+		id: 'hejss' + i,
+		'data-lightbox': "pics", 
+		'data-title': data.arr[i].title,
+	    href: "https://farm" + data.arr[i].farmid + ".staticflickr.com/"+ data.arr[i].serverid +"/"+ data.arr[i].photoid +"_"+ data.arr[i].secretid +"_b.jpg"
+	}).appendTo('#hejs' + i);
+
+
+	jQuery('<img/>', {
+		class: 'img img-thumbnail pos',
+	    src: "https://farm" + data.arr[i].farmid + ".staticflickr.com/"+ data.arr[i].serverid +"/"+ data.arr[i].photoid +"_"+ data.arr[i].secretid +"_q.jpg"
+	}).appendTo('#hejss' + i);
+
+}
+```
+
+Vi vill loopa igenom arrayen med bilder och skapa en URL som är konstruerad på det sätt som Flickr’s API använder. Vi studerar följande kodsnutt lite mer i detalj.
+
+"https://farm" + data.arr[i].farmid + ".staticflickr.com/"+ data.arr[i].serverid +"/"+ data.arr[i].photoid +"_"+ data.arr[i].secretid +"_q.jpg"
+
+För varje bild i arrayen finns ett av de fem tillhörande arributen som skapades i getPics.js och därefter så skapas URLen genom att den hämtar olika id:en från data.arr.
+
+Själva skapadet av taggar i form divs och img så används jQuery-anrop där olika arrtribut går att skicka med och antingen appenda eller prependa till respektive div och id beroende på vad som är lämpligt.
+
+---
+Jade
+---
+För att kunna lägga till en struktur på webbsidan så använder jag mig av Jade som template istället för HTML. Givetvis går det bra att välja vad som passar bäst men fördelarna med Jade är att det följer en enklare struktur i form av indentering och att man slipper avsluta taggar o.s.v. Det går också bra att kombinera Jade med HTML syntax om så önskas.
+
+Själva strukturen är uppdelad i olika filer för t.ex. header, body och footer.
+
+```javascript
+html
+  head
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+    link(rel="stylesheet", href="/css/lightbox.css")
+  body
+    block content
+    
+    script(src="//code.jquery.com/jquery-1.11.0.min.js")
+    script(src="/js/lightbox.min.js")
+    script(src="/js/client.js")
+```
+
+För att underlätta struktur delas innehållet upp med hjälp av att body-innehållet refererar till en annan fil, nämligen index.jade som visas nedan.
+
+```javascript
+extends layout
+
+block content
+  .aligncenter.textcenter
+   h1= title
+   p(id="sub")= subtitle
+   
+   .input-group.aligncenter
+    span.input-group-addon #
+    <input type="text" id="taginput" class="form-control" placeholder="Hashtag" name="hashtag">
+
+  div.container
+   div(id="hej").row
+```
+
+Här skapas innehållet för själva webbsidan och eftesom tjänsten är relativt simpel så finns det inte så mycket innehåll här. Följ dokumentation för Jade för att se hur syntaxen ska se ut. 
+
+===
+Slutresultat
+===
+
+Om alla steg har följts så bör du nu ha skapat en tjänst där användaren kan söka efter valfri hashtag och hämta bilder som innhåller denna. Hur själva utseendet på sidan är upplagt bestämmer du själv. Jag valde att använda Bootstrap för enkelhetens skull och sen använde jag lightbox.js för att kunna förstora bilderna och bläddra mellan dem. Nedan visas hur slutresultat skulle kunna se ut.
+
+IN MED BILD1
+
+IN MED BILD2
+
