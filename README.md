@@ -319,7 +319,9 @@ Slutresultat
 
 Om alla steg har följts så bör du nu ha skapat en tjänst där användaren kan söka efter valfri hashtag och hämta bilder som innhåller denna. Hur själva utseendet på sidan är upplagt bestämmer du själv. Jag valde att använda Bootstrap för enkelhetens skull och sen använde jag lightbox.js för att kunna förstora bilderna och bläddra mellan dem. Nedan visas hur slutresultat skulle kunna se ut.
 
-IN MED BILD1
+[Slutresultat](http://imgur.com/a/JnyrV).
 
-IN MED BILD2
+All kod till mitt projekt finns tillgängligt i denna repo och går att ladda ned för att testa. 
+
+Lycka till!
 
