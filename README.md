@@ -1,4 +1,4 @@
-===
+
 Installera node.js + express.js
 ===
 
@@ -192,7 +192,7 @@ callback(arrayResults);
 ```
 
 ---
-Steg 1: Hantera data
+Steg 1: Skicka data
 ---
 
 Vi vill nu skicka med data från den callback som vi gjorde i föregående steg. Detta görs i /routes->index.js
@@ -213,7 +213,7 @@ router.post('/',function(req, res){
 Som använder sig av den exporterade metoden från getPics.js med inparametrerna från callbacken. Därefter så vill vi skicka med responsen med två olika attribut, en med arrayens innehåll och en med det eventuella felet. Värt att notera är att själva hastagen skickas med från inputfältet i index.jade, som sedan tas in via bodyn på klientsidan och sätts till en variabel. Denna variabel skickas med till getPics.js och används där för att hämta respektive bilder. 
 
 ---
-Steg 2: Presentera bilderna
+Steg 2: Hantera data
 ---
 
 Nu vill vi kunna visa bilderna som vi precis har hämtas. Vi skapar en javascript-fil som hanterar detta. I mitt fall så döpte jag den till client.js
@@ -233,7 +233,7 @@ $(document).ready(function(){
 Inledningsvis så är tanken att funktionen väntar på att användaren skall trycka på Enter på tangetbordet och därmed utföra sin sökning. Enter har nyckelkoden 13. När det är gjort så skickar den med sökordet, alltså själva hashtagen, i en form av en slags ajax-request som innebär att sidan inte behöver laddas om för varje ny sökning. 
 
 ---
-Nästa steg
+Steg 3: Presentera bilderna
 ---
 
 Därefter är det dags att presentera bilderna som finns i resultatet, i den inparameter som heter data i detta fall. 
@@ -313,7 +313,7 @@ block content
 
 Här skapas innehållet för själva webbsidan och eftesom tjänsten är relativt simpel så finns det inte så mycket innehåll här. Följ dokumentation för Jade för att se hur syntaxen ska se ut. 
 
-===
+
 Slutresultat
 ===
 
