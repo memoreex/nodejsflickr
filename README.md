@@ -22,7 +22,7 @@ npm install express --save
 Nu finns express installerat och nästa steg är att skapa en mappstruktur för din applikation och för detta finns det en generator som gör detta åt dig, kör kommandot:
 
 ```javascript
-npm install express-generator
+npm install -g express-generator
 ```
 
 Därefter skapar du dina mappar och filer som behöves genom att skriva:
@@ -105,7 +105,13 @@ Flickr.authenticate(flickrOptions, function(error, flickr) {
 
 Och fyller i din Key och Secret som du fick tidigare. De går att hitta genom under “Your API keys” under https://www.flickr.com/account/sharing/ 
 
-När du sedan fyllt i dina siffror så kör du applikationen via terminalen igen, via kommandot:
+Du måste sedan lägga till följande kodsnutt högst upp i /routes/index.js
+
+```javascript
+var flikkr = require('../public/js/getPics');
+```
+
+När du gjort det samt fyllt i dina siffror så kör du applikationen via terminalen igen, via kommandot:
 ```javascript
 node ./bin/www
 ```
