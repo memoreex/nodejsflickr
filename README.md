@@ -339,6 +339,8 @@ Om alla steg har följts så bör du nu ha skapat en tjänst där användaren ka
 
 [Slutresultat](http://imgur.com/a/JnyrV).
 
+Demo finns på följande länk https://secret-castle-8877.herokuapp.com/
+
 All kod till mitt projekt finns tillgängligt i denna repo och går att ladda ned för att testa. 
 
 Lycka till!
