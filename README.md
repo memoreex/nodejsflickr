@@ -222,7 +222,7 @@ Som använder sig av den exporterade metoden från getPics.js med inparametrerna
 Steg 2: Hantera data
 ---
 
-Nu vill vi kunna visa bilderna som vi precis har hämtas. Vi skapar en javascript-fil som hanterar detta. I mitt fall så döpte jag den till client.js
+Nu vill vi kunna visa bilderna som vi precis har hämtas. Vi skapar en javascript-fil som hanterar detta. I mitt fall så döpte jag den till client.js.
 
 ```javascript
 $(document).ready(function(){
@@ -233,16 +233,30 @@ $(document).ready(function(){
 				hashtag: $("#taginput").val()
 
 			}, function(data){
-			……//Använda data att hämta ut information om bilderna 
+			……//Använd data för att hämta ut information om bilderna 
 			}
 ```
 Inledningsvis så är tanken att funktionen väntar på att användaren skall trycka på Enter på tangetbordet och därmed utföra sin sökning. Enter har nyckelkoden 13. När det är gjort så skickar den med sökordet, alltså själva hashtagen, i en form av en slags ajax-request som innebär att sidan inte behöver laddas om för varje ny sökning. 
+
+Du måste även lägga till följande script-tag i layout.jade, som beskrivs mer senare. 
+
+```javascript
+script(src="/js/client.js")
+```
 
 Steg 3: Presentera bilderna
 ---
 För att få en bra struktur på bilderna har jag använt mig av Bootstrap (http://getbootstrap.com/) och dess gridsystem och styling. Samtidigt ville jag kunna förstora bilderna och då anser jag Lightbox (http://lokeshdhakar.com/projects/lightbox2/) är ett bra verktyg för det. 
 
-Informationen om bilderna finns i resultatet, i den inparameter som heter *data* i detta fall och som innehåller arrayen i attributet **data.arr**. 
+Efter dessa är installerade och/eller hämtade så måste följande taggar inkluderas i layout.jade
+
+```javascript
+link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
+
+script(src="//code.jquery.com/jquery-1.11.0.min.js")
+script(src="/js/lightbox.min.js")
+```
+Därefter är det dags att hämta ut informationen om bilderna som finns i resultatet, i den inparameter som heter *data* i detta fall och som innehåller arrayen i attributet **data.arr**. 
 
 ```javascript
 for(var i = 0; i < data.arr.length; i++) {
@@ -273,7 +287,7 @@ Vi vill loopa igenom arrayen med bilder och skapa en URL som är konstruerad på
 
 För varje bild i arrayen finns ett av de fem tillhörande arributen som skapades i getPics.js och därefter så skapas URLen genom att den hämtar olika id:en från data.arr.
 
-Själva skapadet av taggar i form divs och img så används jQuery-anrop där olika arrtribut går att skicka med och antingen appenda eller prependa till respektive div och id beroende på vad som är lämpligt.
+För själva skapadet av taggar i form divs och img så används jQuery-anrop där olika arrtribut går att skicka med och antingen appenda eller prependa till respektive div och id beroende på vad som är lämpligt.
 
 Jade
 ---
