@@ -166,9 +166,15 @@ module.exports = {
                 per_page: 18
 
 
-            }, function(err, result) {
-             ... //Kod som hanterar resultatet
+            }, function(err, result){
+            
+            	...//Hantera resultatet, se for-loop nedan för mer detaljer
+              
             }
+                                       
+      });
+    }
+}
 ```
 Efter anropet har gjorts så fås ett svar tillbaka i form av result som är en objekt-array. Det vi vill göra nu är att loopa i genom varje objekt i arrayen och spara undan viktig data i en egen array som vi döper till arrayResults. Den innehåller fem st objekt som behövs för att sedan kunna generera en URL-sträng för bilderna så att vi kan visa dem.
 
@@ -227,15 +233,16 @@ $(document).ready(function(){
 				hashtag: $("#taginput").val()
 
 			}, function(data){
-			……do stuff
+			……//Använda data att hämta ut information om bilderna 
 			}
 ```
 Inledningsvis så är tanken att funktionen väntar på att användaren skall trycka på Enter på tangetbordet och därmed utföra sin sökning. Enter har nyckelkoden 13. När det är gjort så skickar den med sökordet, alltså själva hashtagen, i en form av en slags ajax-request som innebär att sidan inte behöver laddas om för varje ny sökning. 
 
 Steg 3: Presentera bilderna
 ---
+För att få en bra struktur på bilderna har jag använt mig av Bootstrap (http://getbootstrap.com/) och dess gridsystem och styling. Samtidigt ville jag kunna förstora bilderna och då anser jag Lightbox (http://lokeshdhakar.com/projects/lightbox2/) är ett bra verktyg för det. 
 
-Därefter är det dags att presentera bilderna som finns i resultatet, i den inparameter som heter data i detta fall. 
+Informationen om bilderna finns i resultatet, i den inparameter som heter *data* i detta fall och som innehåller arrayen i attributet **data.arr**. 
 
 ```javascript
 for(var i = 0; i < data.arr.length; i++) {
