@@ -419,7 +419,9 @@ router
 function testAPI(token) {
 		console.log('Welcome!  Fetching your information.... ');
 		//console.log(token);
-		FB.api('/me/friends',{fields: 'name,picture.type(large).width(50).height(50)', access_token: token},function(response) {
+		FB.api('/me/friends',
+		{fields: 'name,picture.type(large).width(50).height(50)', access_token: token}
+		,function(response) {
 		  console.log(response);
 		    $scope.$apply(function() {
               $scope.friends = response.data;
